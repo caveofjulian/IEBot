@@ -51,7 +51,9 @@ namespace IEBot.Core.Services
 
         public async Task<IEnumerable<Question>> GetQuestionsAsync()
         {
-            var entities = (await _questionsRepository.GetQuestionsAsync()).ToList();
+            var ents = await _questionsRepository.GetQuestionsAsync();
+            var entities = ents.ToList();
+
             IList<Question> questions = new List<Question>();
 
             entities.ForEach(x => questions.Add(new Question(x.Description, x.Time, x.UserId, x.Id, x.Answered)));

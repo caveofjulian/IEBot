@@ -20,6 +20,14 @@ namespace IEBot.EntityFramework
         public async Task AddQuestionAsync(Question question)
         {
             await _context.Questions.AddAsync(question);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException);
+            }
         }
 
         public async Task<Question> GetQuestionAsync(Guid guid) =>
@@ -41,6 +49,7 @@ namespace IEBot.EntityFramework
         public void UpdateQuestion(Question question)
         {
             _context.Questions.Update(question);
+            _context.SaveChangesAsync();
         }
     }
 }

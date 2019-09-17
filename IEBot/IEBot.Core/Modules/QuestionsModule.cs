@@ -9,6 +9,7 @@ using IEBot.Core.Services;
 
 namespace IEBot.Core.Modules
 {
+    
     public class QuestionsModule : ModuleBase<SocketCommandContext>
     {
         private IQuestionsService _service;
@@ -45,7 +46,8 @@ namespace IEBot.Core.Modules
         {
             if (remainder.ToLower().Contains("all"))
             {
-                var questions = (await _service.GetQuestionsAsync()).ToList();
+                var q = await _service.GetQuestionsAsync();
+                var questions = q.ToList();
 
                 if (!questions.Any()) await ReplyAsync("Er zijn gewoon nog geen vragen..");
 

@@ -19,11 +19,20 @@ namespace IEBot.EntityFramework
         public async Task AddAnswerAsync(Answer answer)
         {
             await _context.Answers.AddAsync(answer);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+            }
         }
 
         public void DeleteAnswer(Answer answer)
         {
             _context.Answers.Remove(answer);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Answer> GetAnswers(Guid questionId)

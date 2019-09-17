@@ -44,16 +44,16 @@ namespace IEBot.Core
 
                 await Task.Delay(-1);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                // log the error...
+                Console.WriteLine(e);
             }
         }
 
-        private async Task RegisterCommandsAsync()
+        private async Task RegisterCommandsAsync() 
         {
             SocketClient.MessageReceived += HandleCommandAsync;
-            await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), Services);
+            await _commands.AddModulesAsync(GetType().Assembly, Services);
         }
 
         private async Task HandleCommandAsync(SocketMessage arg)
