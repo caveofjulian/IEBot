@@ -9,16 +9,16 @@ namespace IEBot.Modules
     public class QuestionsModule : ModuleBase<SocketCommandContext>
     {
         private IQuestionsService _service;
-        public QuestionsModule(IQuestionsService service)
+        public QuestionsModule()
         {
-            _service = service;
+            _service = new QuestionsService();
         }
 
         [Command("Ask")]
         public async Task Ask([Remainder] string description)
         {
             var question = new Question(description,DateTime.Now, Context.User.Id);
-            _service.AddQuestion(question);
+            //_service.AddQuestion(question);
             await ReplyAsync($"Oké deze vraag heeft ID nummer {question.GUID}, dus als je antwoord, begin met \"answer {question.GUID}\"");
         }
 
@@ -29,7 +29,7 @@ namespace IEBot.Modules
             var guid = new Guid(splitter[0]);
             
             var answer = new Answer(guid,description,DateTime.Now, Context.User.Id);
-            _service.SetQuestionAnswered(true);
+            //_service.SetQuestionAnswered(true);
         }
 
         [Command("Questions")]

@@ -41,6 +41,7 @@ namespace IEBot
                 ITokenService tokenService = Services.GetRequiredService<ITokenService>();
                 await SocketClient.LoginAsync(Discord.TokenType.Bot, await tokenService.GetTokenAsync());
                 await SocketClient.StartAsync();
+
                 await Task.Delay(-1);
             }
             catch (Exception)
