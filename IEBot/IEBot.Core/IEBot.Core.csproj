@@ -15,4 +15,8 @@
     <PackageReference Include="Discord.Net.WebSocket" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IEBot.EntityFramework\IEBot.EntityFramework.csproj" />
+  </ItemGroup>
+
 </Project>

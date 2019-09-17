@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using IEBot.Models;
 
 namespace IEBot.Services
 {
     public interface IQuestionsService
     {
-        void AddQuestion(Question question);
+        Task AddQuestionAsync(Question question);
 
-        void SetQuestionAnswered(bool answered);
+        Task SetQuestionAnswered(Guid questionId, bool answered);
+
+        Task<bool> IsQuestionAnswered(Guid questionId);
+
+        Task<Question> GetQuestionAsync(Guid questionId);
+
+        Task<IEnumerable<Question>> GetQuestionsAsync();
 
         IEnumerable<Question> GetQuestions(DateTime date);
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IEBot.Models
+namespace IEBot.Shared.Models
 {
     public class Question
     {
@@ -9,17 +9,7 @@ namespace IEBot.Models
             Description = description;
             Time = time;
             UserId = id;
-
             GUID = Guid.NewGuid();
-        }
-
-        public Question(string description, DateTime time, ulong id, Guid guid, bool answered)
-        {
-            Description = description;
-            Time = time;
-            UserId = id;
-            GUID = guid;
-            Answered = answered;
         }
 
         public Guid GUID { get; }

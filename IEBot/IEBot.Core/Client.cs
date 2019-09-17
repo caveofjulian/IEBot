@@ -12,7 +12,7 @@ namespace IEBot
     public class Client
     {
         public IServiceProvider Services { get; }
-        public DiscordSocketClient SocketClient => new DiscordSocketClient();
+        public DiscordSocketClient SocketClient = new DiscordSocketClient();
 
         // locals
         private readonly CommandService _commands = new CommandService();

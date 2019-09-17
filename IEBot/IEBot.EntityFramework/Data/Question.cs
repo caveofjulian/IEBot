@@ -15,5 +15,7 @@ namespace IEBot.EntityFramework.Data
         public DateTime Time { get; set; }
 
         public ulong UserId { get; set; }
+
+        public bool Answered { get; set; }
     }
 }

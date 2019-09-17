@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using IEBot.EntityFramework;
 using IEBot.Models;
 
 namespace IEBot.Services
@@ -10,35 +13,76 @@ namespace IEBot.Services
         private IQuestionsRepository _questionsRepository;
         private IAnswerRepository _answerRepository;
 
-        public QuestionsService()
+        public QuestionsService(IQuestionsRepository questionsRepository,IAnswerRepository answerRepository)
         {
-            //_questionsRepository = questionsRepository;
-            //_answerRepository = answerRepository;
+            _questionsRepository = questionsRepository;
+            _answerRepository = answerRepository;
         }
 
-        public void AddQuestion(Question question)
+        public async Task AddQuestionAsync(Question question)
         {
-            throw new NotImplementedException();
+            var questionEntity = new EntityFramework.Data.Question()
+            {
+
+                Id = question.GUID,
+                Time = question.Time,
+                Description = question.Description,
+                Answered = question.Answered,
+                UserId = question.UserId
+            };
+
+            await _questionsRepository.AddQuestionAsync(questionEntity);
         }
 
         public IEnumerable<Answer> GetAnswers(Guid questionId)
         {
-            throw new NotImplementedException();
+            var answers = _answerRepository.GetAnswers(questionId).ToList();
+            IList<Answer> modelAnswers = new List<Answer>();
+
+            answers.ForEach(x => modelAnswers.Add(new Answer(x.QuestionId, x.Description, x.Time, x.UserId)));
+            return modelAnswers;
+        }
+
+        public async Task<Question> GetQuestionAsync(Guid questionId)
+        {
+            var entity = await _questionsRepository.GetQuestionAsync(questionId);
+            return new Question(entity.Description, entity.Time, entity.UserId);
+        }
+
+        public async Task<IEnumerable<Question>> GetQuestionsAsync()
+        {
+            var entities = (await _questionsRepository.GetQuestionsAsync()).ToList();
+            IList<Question> questions = new List<Question>();
+
+            entities.ForEach(x => questions.Add(new Question(x.Description, x.Time, x.UserId, x.Id, x.Answered)));
+            return questions;
         }
 
         public IEnumerable<Question> GetQuestions(DateTime date)
         {
-            throw new NotImplementedException();
+            var entities = _questionsRepository.GetQuestions(date).ToList();
+            IList<Question> questions = new List<Question>();
+
+            entities.ForEach(x => questions.Add(new Question(x.Description, x.Time, x.UserId, x.Id, x.Answered)));
+            return questions;
         }
 
         public IEnumerable<Question> GetQuestions(ulong id)
         {
-            throw new NotImplementedException();
+            var entities = _questionsRepository.GetQuestions(id).ToList();
+            IList<Question> questions = new List<Question>();
+
+            entities.ForEach(x => questions.Add(new Question(x.Description, x.Time, x.UserId, x.Id, x.Answered)));
+            return questions;
         }
 
-        public void SetQuestionAnswered(bool answered)
+        public async Task<bool> IsQuestionAnswered(Guid questionId) =>(await _questionsRepository.GetQuestionAsync(questionId)).Answered;
+
+        public async Task SetQuestionAnswered(Guid questionId, bool answered)
         {
-            throw new NotImplementedException();
+            var question= await _questionsRepository.GetQuestionAsync(questionId);
+            question.Answered = answered;
+            _questionsRepository.UpdateQuestion(question); 
         }
     }
 }
