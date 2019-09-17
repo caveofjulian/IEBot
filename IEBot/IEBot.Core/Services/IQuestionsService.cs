@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using IEBot.Core.Models;
+using IEBot.Models;
 
-namespace IEBot.Core.Services
+namespace IEBot.Services
 {
     public interface IQuestionsService
     {

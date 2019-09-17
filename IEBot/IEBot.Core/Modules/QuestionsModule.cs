@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Discord.Commands;
-using IEBot.Core.Models;
-using IEBot.Core.Services;
+using IEBot.Models;
+using IEBot.Services;
 
-namespace IEBot.Core.Modules
+namespace IEBot.Modules
 {
     public class QuestionsModule : ModuleBase<SocketCommandContext>
     {

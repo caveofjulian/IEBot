@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace IEBot.Core.Services
+﻿namespace IEBot.Services
 {
     public class QuestionsService
     {

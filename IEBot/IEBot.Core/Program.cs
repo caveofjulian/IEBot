@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IEBot.Core
+namespace IEBot
 {
     class Program
     {
