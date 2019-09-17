@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using IEBot.Services;
+using IEBot.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IEBot
+namespace IEBot.Core
 {
     public class Client
     {
@@ -63,7 +63,7 @@ namespace IEBot
 
             if (msg is null) return;
 
-            if (!msg.Author.IsBot && msg.HasCharPrefix('*', ref argPos))
+            if (!msg.Author.IsBot)
             {
                 var context = new SocketCommandContext(SocketClient, msg);
                 var result = await _commands.ExecuteAsync(context, argPos, Services);
@@ -72,7 +72,6 @@ namespace IEBot
 
             ulong test = msg.Id;
             var options = new RequestOptions { RetryMode = RetryMode.AlwaysRetry };
-            //await msg.DeleteAsync(options);
         }
 
         private Task Log(LogMessage arg)

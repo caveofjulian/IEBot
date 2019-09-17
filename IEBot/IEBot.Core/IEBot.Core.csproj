@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyName>IEBot</AssemblyName>
-    <RootNamespace>IEBot</RootNamespace>
+    <AssemblyName>IEBot.Core</AssemblyName>
+    <RootNamespace>IEBot.Core</RootNamespace>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>

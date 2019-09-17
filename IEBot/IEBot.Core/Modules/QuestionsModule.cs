@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using IEBot.Models;
-using IEBot.Services;
+using IEBot.Core.Models;
+using IEBot.Core.Services;
 
-namespace IEBot.Modules
+namespace IEBot.Core.Modules
 {
     public class QuestionsModule : ModuleBase<SocketCommandContext>
     {
@@ -15,6 +15,12 @@ namespace IEBot.Modules
         public QuestionsModule(IQuestionsService service)
         {
             _service = service;
+        }
+
+        [Command("test")]
+        public async Task Test()
+        {
+            await ReplyAsync("test");
         }
 
         [Command("Ask")]

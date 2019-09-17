@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IEBot.Core.Models;
 using IEBot.EntityFramework;
-using IEBot.Models;
 
-namespace IEBot.Services
+namespace IEBot.Core.Services
 {
     public class QuestionsService : IQuestionsService
     {

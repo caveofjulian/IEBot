@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IEBot.Models
+namespace IEBot.Core.Models
 {
     public class Answer
     {

@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using IEBot.Core;
+using IEBot.Core.Services;
 using IEBot.EntityFramework;
-using IEBot.Services;
 
 namespace IEBot.Container
 {

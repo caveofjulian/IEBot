@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace IEBot.Services
+namespace IEBot.Core.Services
 {
     internal interface ITokenService
     {
