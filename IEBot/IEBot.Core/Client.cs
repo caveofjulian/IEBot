@@ -39,7 +39,7 @@ namespace IEBot.Core
 
                 var token = await File.ReadAllTextAsync("/home/julian/IEBot/token.txt");
                 Console.Write(token);
-                await SocketClient.LoginAsync(Discord.TokenType.Bot, token);
+                await SocketClient.LoginAsync(Discord.TokenType.Bot, token.Trim());
                 await SocketClient.StartAsync();
 
                 await Task.Delay(-1);
