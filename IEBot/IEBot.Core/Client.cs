@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
@@ -23,7 +24,6 @@ namespace IEBot.Core
             Services = serviceDescriptors
                 .AddSingleton(SocketClient)
                 .AddSingleton(_commands)
-                .AddTransient<ITokenService, TokenFileService>((x) => new TokenFileService(@"D:\workspace\token.txt"))
                 .BuildServiceProvider();
         }
 
@@ -38,8 +38,7 @@ namespace IEBot.Core
                 await RegisterCommandsAsync();
 
                 // get the token service
-                ITokenService tokenService = Services.GetRequiredService<ITokenService>();
-                await SocketClient.LoginAsync(Discord.TokenType.Bot, await tokenService.GetTokenAsync());
+                await SocketClient.LoginAsync(Discord.TokenType.Bot, await File.ReadAllTextAsync("/home/julian/IEBot/token.txt"));
                 await SocketClient.StartAsync();
 
                 await Task.Delay(-1);
