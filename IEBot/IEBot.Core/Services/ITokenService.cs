@@ -13,7 +13,7 @@ namespace IEBot.Core.Services
     /// </summary>
     internal class TokenFileService : ITokenService
     {
-        private readonly string _tokenFilePath = "D:/workspace/token.txt";
+        private readonly string _tokenFilePath = "/home/julian/IEBot/token.txt";
 
         public TokenFileService(string tokenFilePath)
         {
