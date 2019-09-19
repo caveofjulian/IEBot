@@ -13,7 +13,7 @@ namespace IEBot.EntityFramework.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseMySQL(@"Server=localhost;Database=IEBot;Uid=julian;Pwd=hoihoi123");
+            builder.UseMySQL(@"Server=localhost;Database=IEBot;Uid=julian;Pwd=Hoihoi_123");
         }
     }
 }
