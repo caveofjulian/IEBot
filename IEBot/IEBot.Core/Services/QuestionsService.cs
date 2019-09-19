@@ -34,6 +34,19 @@ namespace IEBot.Core.Services
             await _questionsRepository.AddQuestionAsync(questionEntity);
         }
 
+        public async Task AddAnswerAsync(Answer answer)
+        {
+            var entity = new EntityFramework.Data.Answer()
+            {
+                Description = answer.Description,
+                QuestionId = answer.QuestionId,
+                Time = answer.Time,
+                UserId = answer.UserId
+            };
+
+            await _answerRepository.AddAnswerAsync(entity);
+        }
+
         public IEnumerable<Answer> GetAnswers(Guid questionId)
         {
             var answers = _answerRepository.GetAnswers(questionId).ToList();
@@ -86,5 +99,6 @@ namespace IEBot.Core.Services
             question.Answered = answered;
             _questionsRepository.UpdateQuestion(question); 
         }
+
     }
 }

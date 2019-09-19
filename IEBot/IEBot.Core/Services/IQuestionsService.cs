@@ -9,6 +9,8 @@ namespace IEBot.Core.Services
     {
         Task AddQuestionAsync(Question question);
 
+        Task AddAnswerAsync(Answer answer);
+
         Task SetQuestionAnswered(Guid questionId, bool answered);
 
         Task<bool> IsQuestionAnswered(Guid questionId);

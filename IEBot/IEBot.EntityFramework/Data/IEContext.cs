@@ -13,8 +13,7 @@ namespace IEBot.EntityFramework.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer(
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IEBot;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            builder.UseMySql(@"Server=localhost;Database=IEBot;Uid=julian;Pwd=hoihoi123");
         }
     }
 }

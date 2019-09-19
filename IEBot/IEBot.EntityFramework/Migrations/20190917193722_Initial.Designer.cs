@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IEBot.EntityFramework.Migrations
 {
     [DbContext(typeof(IEContext))]
-    [Migration("20190917191838_IEContext")]
-    partial class IEContext
+    [Migration("20190917193722_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

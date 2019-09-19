@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using IEBot.Core.Models;
 using IEBot.Core.Services;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 
 namespace IEBot.Core.Modules
 {
@@ -13,9 +15,15 @@ namespace IEBot.Core.Modules
     public class QuestionsModule : ModuleBase<SocketCommandContext>
     {
         private IQuestionsService _service;
+
         public QuestionsModule(IQuestionsService service)
         {
             _service = service;
+            string s = "hello";
+            for (int i = 0; i < s.Length; i++)
+            {
+                
+            }
         }
 
         [Command("test")]
@@ -33,15 +41,34 @@ namespace IEBot.Core.Modules
         }
 
         [Command("Answer")]
-        public async Task Answer([Remainder] string description)
+        public async Task Answer([Remainder] string args)
         {
-            var splitter = description.Split(' ');
-            var guid = new Guid(splitter[0]);
-            var answer = new Answer(guid,description,DateTime.Now, Context.User.Id);
-            await _service.SetQuestionAnswered(guid,true);
+            var splitter = args.Split(' ');
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 1; i < splitter.Length; i++)
+            {
+                builder.Append(splitter[i]);
+            }
+
+            Guid guid;
+            var succeeded = Guid.TryParse(splitter[0].Trim(), out guid);
+
+            if (!succeeded)
+            {
+                await ReplyAsync("Je hebt de guid niet goed ingetypt dus je mag niet antwoorden :(");
+            }
+            else
+            {
+                var answer = new Answer(guid, builder.ToString(), DateTime.Now, Context.User.Id);
+                await _service.AddAnswerAsync(answer);
+                await _service.SetQuestionAnswered(guid, true);
+                await ReplyAsync("Goed dat je deze vraag hebt beantwoord gap.");
+            }
         }
 
         [Command("Questions")]
+        [Alias("ShowQuestions", "Show Questions", "Show Question", "ShowQuestion")]
         public async Task ShowQuestions([Remainder] string remainder)
         {
             if (remainder.ToLower().Contains("all"))
@@ -52,14 +79,15 @@ namespace IEBot.Core.Modules
                 if (!questions.Any()) await ReplyAsync("Er zijn gewoon nog geen vragen..");
 
                 await SendQuestions(questions);
-
             }
         }
 
-        public async Task ShowAnswers([Remainder] string questionId)
+        [Command("ShowAnswers")]
+        [Alias("Answers all", "Answers", "ShowAnswer", "Show Answer", "Show Answers")]
+        public async Task ShowAnswers([Remainder] string args)
         {
             Guid guid;
-            var succeeded = Guid.TryParse(questionId, out guid);
+            var succeeded = Guid.TryParse(args.Trim(), out guid);
 
             if (!succeeded)
             {
@@ -67,7 +95,7 @@ namespace IEBot.Core.Modules
             }
             else
             {
-                var answers = _service.GetAnswers(new Guid(questionId)).ToList();
+                var answers = _service.GetAnswers(guid).ToList();
 
                 if (!answers.Any()) await ReplyAsync("Er zijn hier helaas nog geen antwoorden op.");
                 else await SendAnswers(answers);
@@ -95,11 +123,10 @@ namespace IEBot.Core.Modules
         private Embed CreateEmbed(Question question)
         {
             var builder = new EmbedBuilder();
-            builder.Author.Name = Context.Guild.GetUser(question.UserId).Nickname;
 
             string word = question.Answered ? "al" : "nog niet";
 
-            builder.Title = $"Vraag {question.GUID} op {question.Time} is {question.Answered} beantwoord.";
+            builder.Title = $"De vraag van {Context.Guild.GetUser(question.UserId).Username} met ID {question.GUID} op {question.Time} is {word} beantwoord.";
             builder.Description = question.Description;
             return builder.Build();
         }
@@ -107,8 +134,10 @@ namespace IEBot.Core.Modules
         private async Task<Embed> CreateEmbed(Answer answer)
         {
             var builder = new EmbedBuilder();
-            builder.Author.Name = Context.Guild.GetUser(answer.UserId).Nickname;
-            builder.Title = (await _service.GetQuestionAsync(answer.QuestionId)).Description;
+            var question = await _service.GetQuestionAsync(answer.QuestionId);
+            builder.Title = $"{question.Description}";
+            builder.WithAuthor(new EmbedAuthorBuilder().WithName($"Gevraagd door: {Context.Guild.GetUser(question.UserId).Username}, Beantwoord door: {Context.Guild.GetUser(answer.UserId).Username}"));
+
             builder.Description = answer.Description;
             return builder.Build();
         }
