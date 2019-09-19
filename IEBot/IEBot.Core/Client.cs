@@ -37,8 +37,9 @@ namespace IEBot.Core
                 SocketClient.Log += Log;
                 await RegisterCommandsAsync();
 
-                // get the token service
-                await SocketClient.LoginAsync(Discord.TokenType.Bot, await File.ReadAllTextAsync("/home/julian/IEBot/token.txt"));
+                var token = await File.ReadAllTextAsync("/home/julian/IEBot/token.txt");
+                Console.Write(token);
+                await SocketClient.LoginAsync(Discord.TokenType.Bot, token);
                 await SocketClient.StartAsync();
 
                 await Task.Delay(-1);
