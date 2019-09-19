@@ -16,6 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.17" />
+    <PackageReference Include="MySqlConnector" Version="0.56.0" />
   </ItemGroup>
 
   <ItemGroup>
