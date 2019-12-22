@@ -1,2 +1,2 @@
 # IEBot
-Discord bot for I&amp;E bitchas
+Very simple lightweight Discord Bot for Informatica&Economie (IE) university Discord that handles questions.
